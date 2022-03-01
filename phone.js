@@ -1,24 +1,38 @@
 
-
-
+const error = document.getElementById('error')
 const loadSearch = () => {
     // remove previous loaded
     document.getElementById('display-phn').textContent = ''
     document.getElementById('detail').textContent = ''
 
     const searchField = document.getElementById('search-field');
-    searchText = searchField.value;
+    const searchText = searchField.value;
     searchField.value = ''
-    const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displaySearch(data.data))
+    if (searchText === '') {
+        return error.innerText = 'What are you searching for?'
+    }
+    else {
+        error.innerText = ''
+        const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status == false) {
+                    return error.innerText = 'your status is false'
+                }
+                else {
+                    displaySearch(data.data)
+                }
+            })
+    }
 
 }
 const displaySearch = phones => {
 
     const displayPhn = document.getElementById('display-phn')
-    phones.forEach(phone => {
+
+    phones.slice(0, 20).forEach(phone => {
+        console.log(phone)
         const div = document.createElement('div')
         div.classList.add('col')
         div.innerHTML = `
@@ -29,12 +43,19 @@ const displaySearch = phones => {
                 <div class="card-body">
                     <h5 class="card-title">${phone.phone_name}</h5>
                     <p class="card-text">${phone.brand}</p>
-                    <button type="button" onclick="loadDetails('${phone.slug}')" class="btn btn-danger btn-style">Details</button>
+                    <button type="button" onclick="loadDetails('${phone.slug}')" class="btn btn-style">Details</button>
                 </div>
             </div>
        `
         displayPhn.appendChild(div)
     });
+    // phones.slice(21, phones.length).forEach(phone => {
+    //     const div = document.createElement('div')
+    //     div.innerHTML = `
+    //     <button type="button" onclick="loadDetailsOthers('${phone.slug}')" class="btn btn-style">Show more</button>
+    //    `
+    // });
+
 }
 const loadDetails = id => {
     document.getElementById('detail').textContent = ''
@@ -45,15 +66,15 @@ const loadDetails = id => {
 
 }
 const displayDetails = info => {
-    console.log(info)
+    // console.log(info)
     const displayDetail = document.getElementById('detail')
     const div = document.createElement('div')
     div.innerHTML = `
     <div  class="card m-auto w-50 mt-5 detail-card p-5">
         <div class="row g-0">
           <div class="col-md-4 mt-3 ">
-            <img src="${info.image}" class="img-fluid rounded-start" alt="...">
-            <button type="button" onclick="" class="btn btn-danger btn-style mt-3">Details</button>
+              <img src="${info.image}" class="img-fluid rounded-start" alt="...">
+              <button type="button" onclick="" class="btn btn-style mt-3">Details</button>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -71,6 +92,4 @@ const displayDetails = info => {
     
     `
     displayDetail.appendChild(div)
-
-
 }
