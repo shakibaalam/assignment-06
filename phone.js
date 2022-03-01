@@ -1,6 +1,11 @@
-
+//error handle
 const error = document.getElementById('error')
+//spiner 
+
+//search button clicked
 const loadSearch = () => {
+    //spinner starts
+    document.getElementById('spinner').style.display = 'block'
     // remove previous loaded
     document.getElementById('display-phn').textContent = ''
     document.getElementById('detail').textContent = ''
@@ -27,10 +32,11 @@ const loadSearch = () => {
     }
 
 }
+//display searched 
 const displaySearch = phones => {
-
+    //spinner stops
+    document.getElementById('spinner').style.display = 'none'
     const displayPhn = document.getElementById('display-phn')
-
     phones.slice(0, 20).forEach(phone => {
         // console.log(phone.slug)
         const div = document.createElement('div')
@@ -51,15 +57,11 @@ const displaySearch = phones => {
         displayPhn.appendChild(div)
     });
 
-    // phones.slice(21, phones.length).forEach(phone => {
-    //     const div = document.createElement('div')
-    //     div.innerHTML = `
-    //      // <button type="button" onclick="loadDetailsOthers('${phones}')" class="btn btn-style">Show more</button>
-    //    `
-    // });
-
 }
+//details loading 
 const loadDetails = id => {
+    //spinner starts
+    document.getElementById('spinner').style.display = 'block'
     document.getElementById('detail').textContent = ''
     const url = ` https://openapi.programming-hero.com/api/phone/${id}`
     console.log(url)
@@ -68,8 +70,11 @@ const loadDetails = id => {
         .then(data => displayDetails(data.data))
 
 }
+//display details
 const displayDetails = info => {
-    console.log(info)
+    //spinner stops
+    document.getElementById('spinner').style.display = 'none'
+    // console.log(info)
     const displayDetail = document.getElementById('detail')
     const div = document.createElement('div')
     div.innerHTML = `

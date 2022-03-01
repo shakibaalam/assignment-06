@@ -3,11 +3,14 @@
     color: palevioletred;
 }
 .btn-style{
-    background-color:  rgb(201, 66, 111);
+    background-color:  rgb(218, 81, 127);
 }
 .card-style{
     background-color: rgb(236, 236, 236);
 }
 .detail-card{
     background-color: rgb(199, 195, 195);
+}
+#spinner{
+    display: none;
 }
