@@ -14,6 +14,7 @@ const loadSearch = () => {
     const searchText = searchField.value;
     searchField.value = ''
     if (searchText === '') {
+        document.getElementById('spinner').style.display = 'none'
         return error.innerText = 'What are you searching for?'
     }
     else {
@@ -23,6 +24,7 @@ const loadSearch = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.status == false) {
+                    document.getElementById('spinner').style.display = 'none'
                     return error.innerText = 'your status is false'
                 }
                 else {
