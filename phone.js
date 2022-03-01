@@ -32,7 +32,7 @@ const displaySearch = phones => {
     const displayPhn = document.getElementById('display-phn')
 
     phones.slice(0, 20).forEach(phone => {
-        console.log(phone)
+        // console.log(phone.slug)
         const div = document.createElement('div')
         div.classList.add('col')
         div.innerHTML = `
@@ -46,27 +46,31 @@ const displaySearch = phones => {
                     <button type="button" onclick="loadDetails('${phone.slug}')" class="btn btn-style">Details</button>
                 </div>
             </div>
+            // <button type="button" onclick="loadDetailsOthers('${phones}')" class="btn btn-style">Show more</button>
        `
         displayPhn.appendChild(div)
     });
+
     // phones.slice(21, phones.length).forEach(phone => {
     //     const div = document.createElement('div')
     //     div.innerHTML = `
-    //     <button type="button" onclick="loadDetailsOthers('${phone.slug}')" class="btn btn-style">Show more</button>
+    //     
     //    `
     // });
 
 }
 const loadDetails = id => {
     document.getElementById('detail').textContent = ''
-    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+    const url = ` https://openapi.programming-hero.com/api/phone/${id}`
+    console.log(url)
     fetch(url)
         .then(res => res.json())
         .then(data => displayDetails(data.data))
 
 }
 const displayDetails = info => {
-    // console.log(info)
+
+    console.log(info)
     const displayDetail = document.getElementById('detail')
     const div = document.createElement('div')
     div.innerHTML = `
@@ -79,7 +83,7 @@ const displayDetails = info => {
           <div class="col-md-8">
             <div class="card-body">
             <h5 class="card-title">${info.name}</h5>
-            <p class="card-text">${info.releaseDate}</p>
+            <p class="card-text">${info.releaseDate ? info.releaseDate : 'Not Found '}</p>
             <p class="card-text">Chip Set: ${info.mainFeatures.chipSet}</p>
             <p class="card-text">Memory: ${info.mainFeatures.memory}</p>
             <p class="card-text">Storage: ${info.mainFeatures.storage}</p>
